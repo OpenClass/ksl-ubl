@@ -1,0 +1,28 @@
+- name: Install erlang
+  apt:
+    name: erlang
+    state: present
+  apt_cache: true
+  tags: rabbitmq
+
+- name: Install rabbitMQ Server
+  apt:
+    name: rabbitmq-server
+    state: present
+  tags: rabbitmq 
+
+- name: Enable rabbitMQ management plugins
+  command: rabbitmq-plugins enable rabbitmq_management
+  tags: rabbitmq
+
+- name: Add user and set password
+  command: rabbitmqctl add_user ksl-ubl ksl-ubl
+  ignore_errors: True
+  tags: rabbitmq
+
+- name: Set user to administratot
+  command: rabbitmqctl set_user_tags ksl-ubl administrator
+  tags: rabbitmq
+
+- name: Set user permissions 
+  command: rabbitmqctl set_user_tags ksl-ubl administrator
