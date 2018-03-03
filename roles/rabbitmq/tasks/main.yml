@@ -20,9 +20,30 @@
   ignore_errors: True
   tags: rabbitmq
 
-- name: Set user to administratot
+- name: Set user to administrator
   command: rabbitmqctl set_user_tags ksl-ubl administrator
   tags: rabbitmq
 
 - name: Set user permissions 
   command: rabbitmqctl set_user_tags ksl-ubl administrator
+  tags: rabbitmq
+
+- name: Set variable learn_rabbitmq directory
+  command: echo /home/vagrant/learn_rabbitmq
+  register: dir_learn_rabbit
+  tags: rabbitmq
+
+- name: Copy learn_rabbitmq directory to home dir
+  copy:
+    src: learn_rabbitmq/
+    dest: "{{ dir_learn_rabbit.stdout }}/"
+    owner: vagrant
+    group: vagrant
+    mode: 0755
+  tags: rabbitmq
+
+- name: Install python libraries dependencies
+  pip:
+    requirements: "{{ dir_learn_rabbit.stdout }}/requirements.txt"
+    virtualenv: "{{ dir_learn_rabbit.stdout }}/venv"
+  tags: rabbitmq

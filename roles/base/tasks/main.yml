@@ -1,0 +1,17 @@
+- name: Update Ubuntu Repository
+  apt:
+    update_cache: True
+    cache_valid_time: 3600
+  tags: base
+
+- name: Install pip
+  apt:
+    name: python-pip
+    state: present
+  tags: base
+
+- name: Install virtualenv
+  apt:
+    name: virtualenv
+    state: present
+  tags: base
