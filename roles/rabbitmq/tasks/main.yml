@@ -2,7 +2,7 @@
   apt:
     name: erlang
     state: present
-  apt_cache: true
+  apt_cache: True
   tags: rabbitmq
 
 - name: Install rabbitMQ Server
@@ -46,4 +46,5 @@
   pip:
     requirements: "{{ dir_learn_rabbit.stdout }}/requirements.txt"
     virtualenv: "{{ dir_learn_rabbit.stdout }}/venv"
+  become: False
   tags: rabbitmq
